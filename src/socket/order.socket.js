@@ -17,6 +17,7 @@ const {
   normalizePaymentMethod,
   resolveOrderAddress
 } = require("../utils/orderRequest");
+const { toOrderDeliveryAddress } = require("../utils/addressFields");
 const {
   clearDriverAssignment,
   emitOrderStatusUpdate,
@@ -302,11 +303,7 @@ const orderSocketHandler = () => {
             discount: 0,
             totalAmount: cart.totalAmount
           },
-          deliveryAddress: {
-            fullAddress: address.fullAddress,
-            latitude: address.latitude,
-            longitude: address.longitude
-          },
+          deliveryAddress: toOrderDeliveryAddress(address),
           payment: {
             method: paymentMethod,
             paymentStatus: paymentMethod === "WALLET" ? "PAID" : "PENDING"

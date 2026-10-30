@@ -1,4 +1,5 @@
 const User = require("../module/user.model");
+const { validateStructuredAddress } = require("../utils/addressFields");
 const Partner = require("../module/partner.model");
 const Category = require("../module/category.model");
 const MenuItem = require("../module/menuItem.model");
@@ -192,19 +193,18 @@ exports.addAddress = async (req, res) => {
 
     const {
       label,
-      fullAddress,
       city,
       state,
-      pincode,
       latitude,
       longitude,
       isDefault
     } = req.body;
 
-    if (!fullAddress) {
+    const structured = validateStructuredAddress(req.body);
+    if (structured.error) {
       return res.status(400).json({
         statusCode: 400,
-        message: "Full address is required"
+        message: structured.error
       });
     }
 
@@ -226,10 +226,9 @@ exports.addAddress = async (req, res) => {
 
     user.addresses.push({
       label,
-      fullAddress,
+      ...structured.value,
       city,
       state,
-      pincode,
       latitude,
       longitude,
       isDefault: isDefault || false
@@ -306,6 +305,9 @@ exports.updateAddress = async (req, res) => {
     const fields = [
       "label",
       "fullAddress",
+      "flatNo",
+      "floor",
+      "areaName",
       "city",
       "state",
       "pincode",
@@ -318,6 +320,15 @@ exports.updateAddress = async (req, res) => {
         address[field] = updates[field];
       }
     });
+
+    const structured = validateStructuredAddress(address);
+    if (structured.error) {
+      return res.status(400).json({
+        statusCode: 400,
+        message: structured.error
+      });
+    }
+    Object.assign(address, structured.value);
 
     if (updates.isDefault === true) {
       user.addresses.forEach((addr) => {

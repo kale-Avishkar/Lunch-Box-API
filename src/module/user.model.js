@@ -8,6 +8,9 @@ const addressSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  flatNo: String,
+  floor: String,
+  areaName: String,
   city: String,
   state: String,
   pincode: String,

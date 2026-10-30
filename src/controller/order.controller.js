@@ -18,6 +18,7 @@ const {
   normalizePaymentMethod,
   resolveOrderAddress
 } = require("../utils/orderRequest");
+const { toOrderDeliveryAddress } = require("../utils/addressFields");
 const {
   buildOrderStatusPayload,
 } = require("../constants/orderStatus");
@@ -178,11 +179,7 @@ exports.createOrder = async (req, res) => {
         discount: 0,
         totalAmount
       },
-      deliveryAddress: {
-        fullAddress: address.fullAddress,
-        latitude: address.latitude,
-        longitude: address.longitude
-      },
+      deliveryAddress: toOrderDeliveryAddress(address),
       payment: {
         method: paymentMethod,
         paymentStatus: paymentMethod === "WALLET" ? "PAID" : "PENDING"

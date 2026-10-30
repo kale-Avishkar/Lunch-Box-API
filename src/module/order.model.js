@@ -103,6 +103,10 @@ const orderSchema = new mongoose.Schema(
     */
     deliveryAddress: {
       fullAddress: String,
+      flatNo: String,
+      floor: String,
+      areaName: String,
+      pincode: String,
       latitude: Number,
       longitude: Number,
     },

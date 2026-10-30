@@ -13,6 +13,10 @@ const addressSnapshotSchema = new mongoose.Schema(
   {
     addressId: mongoose.Schema.Types.ObjectId,
     fullAddress: String,
+    flatNo: String,
+    floor: String,
+    areaName: String,
+    pincode: String,
     latitude: Number,
     longitude: Number,
     label: String

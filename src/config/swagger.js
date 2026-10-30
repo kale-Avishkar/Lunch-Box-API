@@ -268,9 +268,12 @@ const options = {
 
         UserAddressCreateRequest: {
           type: "object",
-          required: ["fullAddress"],
+          required: ["flatNo", "floor", "areaName", "fullAddress", "pincode"],
           properties: {
             label: { type: "string", example: "Home" },
+            flatNo: { type: "string", example: "12" },
+            floor: { type: "string", example: "3" },
+            areaName: { type: "string", example: "Baner" },
             fullAddress: { type: "string", example: "MG Road, Pune" },
             city: { type: "string", example: "Pune" },
             state: { type: "string", example: "Maharashtra" },
@@ -283,8 +286,12 @@ const options = {
 
         UserAddressUpdateRequest: {
           type: "object",
+          required: ["flatNo", "floor", "areaName", "fullAddress", "pincode"],
           properties: {
             label: { type: "string", example: "Office" },
+            flatNo: { type: "string", example: "4B" },
+            floor: { type: "string", example: "1" },
+            areaName: { type: "string", example: "Baner" },
             fullAddress: { type: "string", example: "Baner Road, Pune" },
             city: { type: "string", example: "Pune" },
             state: { type: "string", example: "Maharashtra" },

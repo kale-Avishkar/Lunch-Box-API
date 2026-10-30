@@ -11,6 +11,7 @@ const { publishOrderEvent } = require("./orderEvents");
 const { notifyUser } = require("./userNotification");
 const logger = require("./logger");
 const { isScheduledForToday } = require("../services/subscriptionSchedule.service");
+const { toOrderDeliveryAddress } = require("./addressFields");
 
 const SUBSCRIPTION_NOT_DUE_MESSAGE =
   "This meal can only be completed on its scheduled date";
@@ -155,11 +156,7 @@ async function materializeOrderFromSubscriptionDelivery(deliveryId) {
       discount: 0,
       totalAmount: unitPrice,
     },
-    deliveryAddress: {
-      fullAddress: address.fullAddress,
-      latitude: address.latitude ?? undefined,
-      longitude: address.longitude ?? undefined,
-    },
+    deliveryAddress: toOrderDeliveryAddress(address),
     payment: {
       method: "COD",
       paymentStatus: "PAID",
